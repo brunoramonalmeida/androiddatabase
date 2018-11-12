@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,5 +54,10 @@ public class MainActivity extends AppCompatActivity {
         values.put("senha",senha.getText().toString());
 
         long newId = db.insert(DataBaseHelper.TABLE_NAME,null,values);
+
+        if (newId != -1)
+            Toast.makeText(this,"Dados inseridos", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this,"Erro ao inserir dados", Toast.LENGTH_LONG).show();
     }
 }

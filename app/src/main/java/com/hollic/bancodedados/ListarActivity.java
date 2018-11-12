@@ -21,23 +21,31 @@ public class ListarActivity extends AppCompatActivity {
 
         mListView = findViewById(R.id.lista);
 
-        helper = new DataBaseHelper(this);
+        helper = new DataBaseHelper(this); // instancia Helper
 
-        SQLiteDatabase db = helper.getReadableDatabase();
+        SQLiteDatabase db = helper.getReadableDatabase(); // instancia BD em modo de leitura
 
+        // Campos a serem lido do BD
         String[] campos = {
                 DataBaseHelper.COLUMN_NAME_LOGIN
         };
 
+        // Cursor contém o resultado da consulta
         Cursor cursor = db.query(DataBaseHelper.TABLE_NAME,campos,null,null,null,null,null);
 
+        // Monta um ArrayList com os dados da consulta
         ArrayList<String> nomes = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            nomes.add(cursor.getString(cursor.getColumnIndex("login")));
+        while (cursor.moveToNext()) { // enquanto houver dados para serem lidos, faça
+//            adiciona no arraylist o dados lido do banco
+            String login = cursor.getString(cursor.getColumnIndex("login"));
+            nomes.add(login);
         }
 
+        // Criar o adapter para listar os dados
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         adapter.addAll(nomes);
+
+        // associa o Adapter a ListView
         mListView.setAdapter(adapter);
     }
 }
